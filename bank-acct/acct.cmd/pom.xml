@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>co.marcuss</groupId>
 	<artifactId>acct.cmd</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>acct.cmd</name>
 	<description>Command Account API</description>
 	<properties>

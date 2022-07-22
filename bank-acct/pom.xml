@@ -14,4 +14,10 @@
         <maven.compiler.target>18</maven.compiler.target>
     </properties>
 
+    <modules>
+        <module>../cqrs-es/cqrs.core</module>
+        <module>acct.query</module>
+        <module>acct.cmd</module>
+        <module>acct.commons</module>
+    </modules>
 </project>
