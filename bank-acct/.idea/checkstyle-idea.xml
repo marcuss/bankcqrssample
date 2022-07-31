@@ -3,7 +3,6 @@
   <component name="CheckStyle-IDEA" serialisationVersion="2">
     <checkstyleVersion>9.0.1</checkstyleVersion>
     <scanScope>JavaOnlyWithTests</scanScope>
-    <suppressErrors>true</suppressErrors>
     <option name="thirdPartyClasspath" />
     <option name="activeLocationIds">
       <option value="bundled-google-checks" />
