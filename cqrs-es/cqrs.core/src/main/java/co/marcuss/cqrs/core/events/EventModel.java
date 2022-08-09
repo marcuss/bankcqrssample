@@ -22,6 +22,8 @@ public class EventModel {
 
     private int version;
 
-    private BaseEvent eventDate;
+    private BaseEvent eventData;
+
+    private String eventType;
 
 }
