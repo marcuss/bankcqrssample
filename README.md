@@ -18,6 +18,9 @@ Please make sure to update tests as appropriate.
 [The Unlicense](https://unlicense.org/)
 
 ## Troubleshooting
-Sometimes mysql could have problems connecting, on internet there are plenty of solutions, but one very weird I found while working with the provided dockwer-compose file, was that the password was correct, and I could even connect using mysql workbench, but spring-boot failed to do so, only after using the following url connection string worked.
+If you get an error statying:
+```Access Denied for User 'root'@'localhost' (using password: YES)```
+
+It could be for a number of reasons found on internet, but if you are reading this please try checking if the environment where you are running your docker compose does not already have a running mysql daemon, in that case is enough with stopping the other conflicting mysql, if not modifying the docker compose, or else, using the fillowing as connection url:
     url: jdbc:mysql://0.0.0.0:3306/bankAccount?createDatabaseIfNotExist=true
 
