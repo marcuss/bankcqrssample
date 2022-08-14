@@ -82,4 +82,12 @@ public class AccountAggregate extends AggregateRoot {
         this.id = event.getId();
         this.active = false;
     }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public Boolean isActive() {
+        return active;
+    }
 }
