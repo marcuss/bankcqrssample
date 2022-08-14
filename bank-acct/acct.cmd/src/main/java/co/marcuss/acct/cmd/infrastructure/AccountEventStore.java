@@ -7,11 +7,11 @@ import co.marcuss.cqrs.core.events.EventModel;
 import co.marcuss.cqrs.core.exceptions.AggregateNotFoundException;
 import co.marcuss.cqrs.core.exceptions.ConcurrencyException;
 import co.marcuss.cqrs.core.infrastructure.EventStore;
+import co.marcuss.cqrs.core.producers.EventProducer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -19,6 +19,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class AccountEventStore implements EventStore {
+    @Autowired
+    private EventProducer eventProducer;
     @Autowired
     private EventStoreRepository eventStoreRepository;
 
@@ -42,8 +44,8 @@ public class AccountEventStore implements EventStore {
                             .eventData(e)
                             .build();
                     var persistedEvent = eventStoreRepository.save(eventModel);
-                    if (persistedEvent != null) {
-                        // TODO: produce event to kafka
+                    if (!persistedEvent.getId().isEmpty()) {
+                       eventProducer.produce(e.getClass().getSimpleName(), e);
                     }
                 }
         );
