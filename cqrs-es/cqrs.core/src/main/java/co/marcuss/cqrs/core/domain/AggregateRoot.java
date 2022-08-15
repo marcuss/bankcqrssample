@@ -29,7 +29,7 @@ public class AggregateRoot {
 
     protected void applyChange(BaseEvent event, Boolean isNew) {
         try {
-            var method = getClass().getClass().getDeclaredMethod("apply", event.getClass());
+            var method = getClass().getDeclaredMethod("apply", event.getClass());
             method.setAccessible(true);
             method.invoke(this, event);
         }

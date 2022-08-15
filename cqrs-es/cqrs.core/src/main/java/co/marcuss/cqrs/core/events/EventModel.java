@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
-@Document(collation = "eventStore")
+@Document(collection = "eventStore")
 public class EventModel {
 
     @Id
