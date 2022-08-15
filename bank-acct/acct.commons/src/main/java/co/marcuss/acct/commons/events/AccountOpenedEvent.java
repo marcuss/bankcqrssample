@@ -1,6 +1,6 @@
 package co.marcuss.acct.commons.events;
 
-import co.marcuss.acct.commons.dto.AcctType;
+import co.marcuss.acct.commons.dto.AccountType;
 import co.marcuss.cqrs.core.events.BaseEvent;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class AccountOpenedEvent extends BaseEvent {
     private String accountHolder;
-    private AcctType acctType;
+    private AccountType accountType;
     private LocalDate createdDate;
     private BigDecimal openingBalance;
 }

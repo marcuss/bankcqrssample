@@ -22,7 +22,7 @@ public class AccountAggregate extends AggregateRoot {
                 .id(command.getId())
                 .accountHolder(command.getAccountHolder())
                 .createdDate(LocalDate.now())
-                .acctType(command.getAcctType())
+                .accountType(command.getAccountType())
                 .openingBalance(command.getOpeningBalance())
                 .build());
     }
