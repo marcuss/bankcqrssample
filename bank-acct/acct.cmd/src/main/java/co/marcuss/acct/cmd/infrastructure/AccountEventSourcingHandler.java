@@ -32,8 +32,8 @@ public class AccountEventSourcingHandler implements EventSourcingHandler<Account
             aggregate.replyEvents(events);
             aggregate.setVersion(
                     events.stream()
-                    .map(BaseEvent::getVersion)
-                    .max(Comparator.naturalOrder()).get()
+                            .map(BaseEvent::getVersion)
+                            .max(Comparator.naturalOrder()).get()
             );
         }
         return aggregate;

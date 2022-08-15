@@ -33,6 +33,21 @@ public class AccountAggregate extends AggregateRoot {
         this.balance = event.getOpeningBalance();
     }
 
+    public void apply(FundsDepositedEvent event) {
+        this.id = event.getId();
+        this.balance.add(event.getAmount());
+    }
+
+    public void apply(FundsWithdrawnEvent event) {
+        this.id = event.getId();
+        this.balance.subtract(event.getAmount());
+    }
+
+    public void apply(AccountClosedEvent event) {
+        this.id = event.getId();
+        this.active = false;
+    }
+
     public void depositFunds(BigDecimal amount) {
         if (!active) {
             throw new IllegalStateException("Funds can not be added to closed accounts");
@@ -49,11 +64,6 @@ public class AccountAggregate extends AggregateRoot {
         );
     }
 
-    public void apply(FundsDepositedEvent event) {
-        this.id = event.getId();
-        this.balance.add(event.getAmount());
-    }
-
     public void withdrawFunds(BigDecimal amount) {
         if (!active) {
             throw new IllegalStateException("Funds can not be withdrawn from closed accounts");
@@ -64,11 +74,6 @@ public class AccountAggregate extends AggregateRoot {
                 .build());
     }
 
-    public void apply(FundsWithdrawnEvent event) {
-        this.id = event.getId();
-        this.balance.subtract(event.getAmount());
-    }
-
     public void closeAccount() {
         if (!active) {
             throw new IllegalStateException("Account can not be close");
@@ -76,11 +81,6 @@ public class AccountAggregate extends AggregateRoot {
         raiseEvent(AccountClosedEvent.builder()
                 .id(this.getId())
                 .build());
-    }
-
-    public void apply(AccountClosedEvent event) {
-        this.id = event.getId();
-        this.active = false;
     }
 
     public BigDecimal getBalance() {

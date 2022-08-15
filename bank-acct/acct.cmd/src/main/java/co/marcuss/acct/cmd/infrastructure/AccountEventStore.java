@@ -27,7 +27,7 @@ public class AccountEventStore implements EventStore {
     @Override
     public void save(String aggregateId, Iterable<BaseEvent> events, int expectedVersion) {
         List<EventModel> eventStream = getFullEventList(aggregateId);
-        if ( expectedVersion != -1 && eventStream.get(eventStream.size() - 1).getVersion() != expectedVersion) {
+        if (expectedVersion != -1 && eventStream.get(eventStream.size() - 1).getVersion() != expectedVersion) {
             throw new ConcurrencyException();
         }
         AtomicInteger version = new AtomicInteger(expectedVersion);
@@ -45,13 +45,14 @@ public class AccountEventStore implements EventStore {
                             .build();
                     var persistedEvent = eventStoreRepository.save(eventModel);
                     if (!persistedEvent.getId().isEmpty()) {
-                       eventProducer.produce(e.getClass().getSimpleName(), e);
+                        eventProducer.produce(e.getClass().getSimpleName(), e);
                     }
                 }
         );
 
 
     }
+
     private List<EventModel> getFullEventList(String aggregateId) {
         return eventStoreRepository.findByAggregateIdentifier(aggregateId);
     }

@@ -4,10 +4,11 @@ import co.marcuss.acct.cmd.domain.AccountAggregate;
 import co.marcuss.cqrs.core.handlers.EventSourcingHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import static ir.cafebabe.math.utils.BigDecimalUtils.*;
+
+import static ir.cafebabe.math.utils.BigDecimalUtils.is;
 
 @Service
-public class AccountCommandHandler implements CommandHandler{
+public class AccountCommandHandler implements CommandHandler {
 
     @Autowired
     private EventSourcingHandler<AccountAggregate> eventSourcingHandler;
