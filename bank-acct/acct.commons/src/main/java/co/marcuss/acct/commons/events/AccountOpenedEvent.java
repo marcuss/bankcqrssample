@@ -15,6 +15,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AccountOpenedEvent extends BaseEvent {
+
     private String accountHolder;
     private AccountType accountType;
     private LocalDate createdDate;

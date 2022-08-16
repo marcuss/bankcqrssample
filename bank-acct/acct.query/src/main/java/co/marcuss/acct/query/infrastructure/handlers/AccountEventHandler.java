@@ -7,9 +7,11 @@ import co.marcuss.acct.commons.events.FundsWithdrawnEvent;
 import co.marcuss.acct.query.domain.BankAccount;
 import co.marcuss.acct.query.domain.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 
+@Service
 public class AccountEventHandler implements EventHandler {
     @Autowired
     private AccountRepository repository;
