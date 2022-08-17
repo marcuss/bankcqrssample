@@ -24,7 +24,7 @@ If you get an error while connecting to MySQL stating:
 ```Access Denied for User 'root'@'localhost' (using password: YES)```
 
 It could be for a number of reasons found on internet, but if you are reading this please try checking if the environment where you are running your docker compose does not already have a running mysql daemon, in that case is enough with stopping the other conflicting mysql, if not modifying the docker compose, or else, using the fillowing as connection url:
-    url: jdbc:mysql://0.0.0.0:3306/bankAccount?createDatabaseIfNotExist=true
+    jdbc:mysql://0.0.0.0:3306/bankAccount?createDatabaseIfNotExist=true
     
 If you get an error while connecting to Mongo, please make sure the new user as described in: mongo-init.js is correctly created.
 
