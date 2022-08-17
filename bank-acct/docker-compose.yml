@@ -1,0 +1,86 @@
+
+version: "3.8"
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - ./../mongodata:/mongodata:rw
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=user
+      - MONGO_INITDB_ROOT_PASSWORD=pass
+    expose:
+      - 27017
+    command: --quiet
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=user
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=pass
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+
+  zookeeper:
+    image: bitnami/zookeeper
+    container_name: zookeeper
+    restart: always
+    ports:
+      - 2181:2181
+    volumes:
+      - ./../zookeeperdata:/zookeeperdata:rw
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+    expose:
+      - 2181
+
+  kafka:
+    image: bitnami/kafka
+    container_name: kafka
+    ports:
+      - 9092:9092
+    restart: always
+    volumes:
+      - ./../kafkadata:/kafkadata:rw
+    environment:
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_LISTENERS=PLAINTEXT://:9092
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092
+    expose:
+      - 9092
+    depends_on:
+      - zookeeper
+
+  mysqldb:
+    image: mysql:latest
+    container_name: mysqldb
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - 3306:3306
+    volumes:
+      - ./../mysqldata:/mysqldata:rw
+
+  adminer:
+    image: adminer:latest
+    container_name: mysql-adminer
+    environment:
+      ADMINER_DEFAULT_SERVER: mysqldb
+    ports:
+      - 8080:8080
+    depends_on:
+      - mysqldb
+
+networks:
+  default:
+    external:
+      name: techbankNet
