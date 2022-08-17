@@ -28,6 +28,27 @@ services:
       - ME_CONFIG_MONGODB_ADMINPASSWORD=pass
       - ME_CONFIG_MONGODB_SERVER=mongodb
 
+  mysqldb:
+    image: mysql:latest
+    container_name: mysqldb
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpassword
+    ports:
+      - 3306:3306
+    volumes:
+      - ./../mysqldata:/mysqldata:rw
+
+  adminer:
+    image: adminer:latest
+    container_name: mysql-adminer
+    environment:
+        - ADMINER_DEFAULT_SERVER=mysqldb
+    ports:
+      - 8080:8080
+    depends_on:
+      - mysqldb
+
   zookeeper:
     image: bitnami/zookeeper
     container_name: zookeeper
@@ -51,14 +72,14 @@ services:
     volumes:
       - ./../kafkadata:/kafkadata:rw
     environment:
-      KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      JMX_PORT: 9997
-      KAFKA_JMX_OPTS: -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=kafka -Dcom.sun.management.jmxremote.rmi.port=9997
+      - KAFKA_BROKER_ID=1
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      - KAFKA_INTER_BROKER_LISTENER_NAME=PLAINTEXT
+      - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
+      - JMX_PORT=9997
+      - KAFKA_JMX_OPTS=-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=kafka -Dcom.sun.management.jmxremote.rmi.port=9997
     expose:
       - 9092
       - 9997
@@ -72,37 +93,16 @@ services:
       - 9090:8080
     restart: always
     environment:
-      KAFKA_CLUSTERS_0_NAME: local
-      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:29092
-      KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
-      KAFKA_CLUSTERS_0_JMXPORT: 9997
-      KAFKA_CLUSTERS_0_SCHEMAREGISTRY: http://schemaregistry:8085
-      KAFKA_CLUSTERS_0_KAFKACONNECT_0_NAME: first
-      KAFKA_CLUSTERS_0_KAFKACONNECT_0_ADDRESS: http://kafka-connect:8083
+      - KAFKA_CLUSTERS_0_NAME=local
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:29092
+      - KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeper:2181
+      - KAFKA_CLUSTERS_0_JMXPORT=9997
+      - KAFKA_CLUSTERS_0_SCHEMAREGISTRY=http://schemaregistry:8085
+      - KAFKA_CLUSTERS_0_KAFKACONNECT_0_NAME=first
+      - KAFKA_CLUSTERS_0_KAFKACONNECT_0_ADDRESS=http://kafka-connect:8083
     depends_on:
       - zookeeper
       - kafka
-
-  mysqldb:
-    image: mysql:latest
-    container_name: mysqldb
-    command: --default-authentication-plugin=mysql_native_password
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-    ports:
-      - 3306:3306
-    volumes:
-      - ./../mysqldata:/mysqldata:rw
-
-  adminer:
-    image: adminer:latest
-    container_name: mysql-adminer
-    environment:
-      ADMINER_DEFAULT_SERVER: mysqldb
-    ports:
-      - 8080:8080
-    depends_on:
-      - mysqldb
 
 networks:
   default:
