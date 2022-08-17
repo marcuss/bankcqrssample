@@ -1,2 +1,17 @@
 server:
   port: 5000
+
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: bankAccount
+      username: appuser
+      password: apppass
+      #uri: mongodb://appuser:apppass@localhost:27017/bankAccount?authMechanism=SCRAM-SHA-256
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
