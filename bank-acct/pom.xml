@@ -15,7 +15,7 @@
     </properties>
 
     <modules>
-        <module>cqrs.core</module>
+        <module>../cqrs.core</module>
         <module>acct.query</module>
         <module>acct.cmd</module>
         <module>acct.commons</module>
