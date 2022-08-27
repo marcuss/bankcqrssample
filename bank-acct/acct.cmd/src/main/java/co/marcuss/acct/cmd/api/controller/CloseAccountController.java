@@ -20,7 +20,8 @@ public class CloseAccountController {
 
     private final CommandDispatcher commandDispatcher;
 
-    public CloseAccountController(@Autowired CommandDispatcher commandDispatcher) {
+    @Autowired
+    public CloseAccountController(CommandDispatcher commandDispatcher) {
         this.commandDispatcher = commandDispatcher;
     }
 

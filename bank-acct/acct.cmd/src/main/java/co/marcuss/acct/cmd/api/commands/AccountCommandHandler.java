@@ -10,8 +10,12 @@ import static ir.cafebabe.math.utils.BigDecimalUtils.is;
 @Service
 public class AccountCommandHandler implements CommandHandler {
 
+    private final EventSourcingHandler<AccountAggregate> eventSourcingHandler;
+
     @Autowired
-    private EventSourcingHandler<AccountAggregate> eventSourcingHandler;
+    public AccountCommandHandler(EventSourcingHandler<AccountAggregate> eventSourcingHandler) {
+        this.eventSourcingHandler = eventSourcingHandler;
+    }
 
     @Override
     public void handle(OpenAccountCommand command) {

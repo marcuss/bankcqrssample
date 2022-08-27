@@ -15,11 +15,15 @@ import javax.annotation.PostConstruct;
 @SpringBootApplication
 public class CommandApplication {
 
-    @Autowired
-    private CommandDispatcher commandDispatcher;
+    private final CommandDispatcher commandDispatcher;
 
-    @Autowired
-    private CommandHandler commandHandler;
+    private final CommandHandler commandHandler;
+
+    @Autowired //Todo: change project to use @Inject
+    public CommandApplication(CommandDispatcher commandDispatcher, CommandHandler commandHandler) {
+        this.commandDispatcher = commandDispatcher;
+        this.commandHandler = commandHandler;
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(CommandApplication.class, args);

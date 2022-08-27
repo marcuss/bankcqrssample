@@ -19,10 +19,14 @@ import java.util.stream.Collectors;
 
 @Service
 public class AccountEventStore implements EventStore {
+    private final EventProducer eventProducer;
+    private final EventStoreRepository eventStoreRepository;
+
     @Autowired
-    private EventProducer eventProducer;
-    @Autowired
-    private EventStoreRepository eventStoreRepository;
+    public AccountEventStore(EventProducer eventProducer, EventStoreRepository eventStoreRepository) {
+        this.eventProducer = eventProducer;
+        this.eventStoreRepository = eventStoreRepository;
+    }
 
     @Override
     public void save(String aggregateId, Iterable<BaseEvent> events, int expectedVersion) {

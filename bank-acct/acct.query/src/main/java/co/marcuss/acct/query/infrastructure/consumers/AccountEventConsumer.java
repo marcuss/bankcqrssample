@@ -13,8 +13,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class AccountEventConsumer implements EventConsumer{
 
+    private final EventHandler eventHandler;
+
     @Autowired
-    private EventHandler eventHandler;
+    public AccountEventConsumer(EventHandler eventHandler) {
+        this.eventHandler = eventHandler;
+    }
 
     @Override
     @KafkaListener(topics = "AccountOpenedEvent", groupId = "${spring.kafka.consumer.group-id}")

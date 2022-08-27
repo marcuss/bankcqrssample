@@ -15,8 +15,12 @@ import java.util.List;
 @Service
 public class AccountEventSourcingHandler implements EventSourcingHandler<AccountAggregate> {
 
+    private final EventStore eventStore;
+
     @Autowired
-    private EventStore eventStore;
+    public AccountEventSourcingHandler(EventStore eventStore) {
+        this.eventStore = eventStore;
+    }
 
     @Override
     public void save(AggregateRoot aggregate) {

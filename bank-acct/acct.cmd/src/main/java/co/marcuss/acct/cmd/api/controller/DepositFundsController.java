@@ -21,7 +21,8 @@ public class DepositFundsController {
 
     private final CommandDispatcher commandDispatcher;
 
-    public DepositFundsController(@Autowired CommandDispatcher commandDispatcher) {
+    @Autowired
+    public DepositFundsController(CommandDispatcher commandDispatcher) {
         this.commandDispatcher = commandDispatcher;
     }
 

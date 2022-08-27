@@ -9,8 +9,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class AccountEventProducer implements EventProducer {
 
+    private final KafkaTemplate<String, Object> kafkaTemplate;
+
     @Autowired
-    private KafkaTemplate<String, Object> kafkaTemplate;
+    public AccountEventProducer(KafkaTemplate<String, Object> kafkaTemplate) {
+        this.kafkaTemplate = kafkaTemplate;
+    }
 
     @Override
     public void produce(String topic, BaseEvent event) {

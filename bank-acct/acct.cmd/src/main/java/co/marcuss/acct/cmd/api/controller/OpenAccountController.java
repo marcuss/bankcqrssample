@@ -19,8 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "api/v1/open-bank-account")
 public class OpenAccountController {
 
+    private final CommandDispatcher commandDispatcher;
+
     @Autowired
-    private CommandDispatcher commandDispatcher;
+    public OpenAccountController(CommandDispatcher commandDispatcher) {
+        this.commandDispatcher = commandDispatcher;
+    }
 
     @PostMapping
     public ResponseEntity<BaseResponse> openAccount(@RequestBody OpenAccountCommand command) {
