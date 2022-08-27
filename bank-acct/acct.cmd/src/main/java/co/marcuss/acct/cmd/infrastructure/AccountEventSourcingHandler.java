@@ -34,6 +34,7 @@ public class AccountEventSourcingHandler implements EventSourcingHandler<Account
         List<BaseEvent> events = eventStore.getEvents(id);
         if (!CollectionUtils.isEmpty(events)) {
             aggregate.replyEvents(events);
+            //noinspection OptionalGetWithoutIsPresent
             aggregate.setVersion(
                     events.stream()
                             .map(BaseEvent::getVersion)
