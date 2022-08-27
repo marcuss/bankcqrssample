@@ -13,8 +13,11 @@ import java.time.LocalDate;
 
 @Service
 public class AccountEventHandler implements EventHandler {
-    @Autowired
-    private AccountRepository repository;
+    private final AccountRepository repository;
+
+    public AccountEventHandler(@Autowired AccountRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public void on(AccountOpenedEvent event) {
