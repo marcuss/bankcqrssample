@@ -1,9 +1,8 @@
 package co.marcuss.acct.cmd.api.controller;
 
-import co.marcuss.acct.cmd.api.commands.DepositFundsCommand;
+import co.marcuss.acct.cmd.api.commands.WithdrawFundsCommand;
 import co.marcuss.acct.cmd.api.dto.OpenAccountResponse;
 import co.marcuss.acct.commons.dto.BaseResponse;
-import co.marcuss.cqrs.core.exceptions.AggregateNotFoundException;
 import co.marcuss.cqrs.core.infrastructure.CommandDispatcher;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,24 +16,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j(topic = "DepositFunds")
 @RestController
-@RequestMapping(path = "api/v1/deposit-funds")
-public class DepositFundsController {
+@RequestMapping(path = "api/v1/withdraw-funds")
+public class WithdrawFundsController {
 
     private final CommandDispatcher commandDispatcher;
 
-    public DepositFundsController(@Autowired CommandDispatcher commandDispatcher) {
+    public WithdrawFundsController(@Autowired CommandDispatcher commandDispatcher) {
         this.commandDispatcher = commandDispatcher;
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<BaseResponse>  depositFunds(@PathVariable(name = "id") String id,
-                                                      @RequestBody DepositFundsCommand command) {
+    public ResponseEntity<BaseResponse> withdrawFunds(@PathVariable(name = "id") String id,
+                                                      @RequestBody WithdrawFundsCommand command) {
 
         try {
             command.setId(id);
             commandDispatcher.send(command);
             return new ResponseEntity<>(
-                    new BaseResponse("Funds deposited request completed successfully"),
+                    new BaseResponse("Withdraw funds request completed successfully"),
                     HttpStatus.OK
             );
         }
@@ -46,8 +45,8 @@ public class DepositFundsController {
             );
         }
         catch (Exception e) {
-            log.error("Error in deposit funds request.", e);
-            log.error("Error in deposit fund request. id: {}", id);
+            log.error("Error in withdraw funds request.", e);
+            log.error("Error in withdraw fund request. id: {}", id);
             return new ResponseEntity<>(
                     new OpenAccountResponse("Server failed to fulfill the request.", null),
                     HttpStatus.INTERNAL_SERVER_ERROR

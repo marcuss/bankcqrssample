@@ -46,7 +46,12 @@ public class AccountEventHandler implements EventHandler {
             bankAccount.ifPresent(e -> e.setBalance(
                     e.getBalance().subtract(event.getAmount())
             ));
+            repository.save(bankAccount.get());
         }
+        else {
+            throw new IllegalStateException("Bank Account Not Found");
+        }
+
     }
 
     @Override
