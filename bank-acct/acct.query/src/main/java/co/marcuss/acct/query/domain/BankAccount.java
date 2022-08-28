@@ -2,12 +2,12 @@ package co.marcuss.acct.query.domain;
 
 import co.marcuss.acct.commons.dto.AccountType;
 import co.marcuss.cqrs.core.domain.BaseEntity;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 

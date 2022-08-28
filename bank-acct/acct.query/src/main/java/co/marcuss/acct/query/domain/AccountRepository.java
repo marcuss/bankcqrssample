@@ -1,14 +1,14 @@
 package co.marcuss.acct.query.domain;
 
 import co.marcuss.cqrs.core.domain.BaseEntity;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.ListCrudRepository;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
 @SuppressWarnings("unused")
-public interface AccountRepository extends CrudRepository<BankAccount, String> {
+public interface AccountRepository extends ListCrudRepository<BankAccount, String> {
 
     Optional<BankAccount> findByAccountHolder(String accountHolder);
 
