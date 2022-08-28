@@ -5,10 +5,15 @@ import co.marcuss.cqrs.core.domain.BaseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+import static co.marcuss.acct.query.api.dto.EqualityType.GreaterThan;
 
 @Service
-public class AccountQueryHandler implements QueryHandler{
+public class AccountQueryHandler implements QueryHandler {
 
     private final AccountRepository accountRepository;
 
@@ -19,21 +24,37 @@ public class AccountQueryHandler implements QueryHandler{
 
     @Override
     public List<BaseEntity> handle(FindAllAccountsQuery query) {
-        return null;
+        return accountRepository.findAll()
+                .stream().parallel()
+                .map(BaseEntity.class::cast)
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<BaseEntity> handle(FindAccountByIdQuery query) {
-        return null;
+        return accountRepository.findById(query.getId())
+                .stream().parallel()
+                .map(BaseEntity.class::cast)
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<BaseEntity> handle(FindAccountByHolderQuery query) {
-        return null;
+        return accountRepository.findByAccountHolder(query.getAccountHolder())
+                .stream().parallel()
+                .map(BaseEntity.class::cast)
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<BaseEntity> handle(FindAccountWithBalanceQuery query) {
-        return null;
+        Function<BigDecimal, List<BaseEntity>> filterFunc =
+                GreaterThan == query.getEqualityType() ?
+                        accountRepository::findByBalanceGreaterThan :
+                        accountRepository::findByBalanceLessThan;
+        return filterFunc.apply(query.getBalance())
+                .stream().parallel()
+                .map(BaseEntity.class::cast)
+                .collect(Collectors.toList());
     }
 }
