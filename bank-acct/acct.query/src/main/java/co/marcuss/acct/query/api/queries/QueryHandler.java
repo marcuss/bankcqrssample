@@ -4,6 +4,7 @@ import co.marcuss.cqrs.core.domain.BaseEntity;
 
 import java.util.List;
 
+@SuppressWarnings("unused")
 public interface QueryHandler {
 
     List<BaseEntity> handle(FindAllAccountsQuery query);

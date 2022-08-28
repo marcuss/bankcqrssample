@@ -2,7 +2,7 @@ package co.marcuss.acct.commons.dto;
 
 public enum AccountType {
     SAVINGS("SV"), CHECKING("CH");
-    private String value;
+    private final String value;
     AccountType(String name) {
         this.value = name;
     }

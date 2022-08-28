@@ -27,6 +27,10 @@ public class AccountAggregate extends AggregateRoot {
                 .build());
     }
 
+    /**
+     * The following <code>apply</code> overloaded methods are called with reflection in the <code>AggregateRoot</code>
+     * @param event
+     */
     public void apply(AccountOpenedEvent event) {
         this.id = event.getId();
         this.active = true;

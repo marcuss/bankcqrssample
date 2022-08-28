@@ -7,6 +7,7 @@ import co.marcuss.acct.commons.events.FundsWithdrawnEvent;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.messaging.handler.annotation.Payload;
 
+@SuppressWarnings("unused")
 public interface EventConsumer {
 
     void consume(@Payload AccountOpenedEvent event, Acknowledgment ack);

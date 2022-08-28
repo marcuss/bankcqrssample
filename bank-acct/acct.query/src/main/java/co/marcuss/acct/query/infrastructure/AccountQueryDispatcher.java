@@ -23,6 +23,7 @@ public class AccountQueryDispatcher implements QueryDispatcher {
                 type,
                 (e) -> Optional.of(new LinkedList<>())
         );
+        //noinspection OptionalGetWithoutIsPresent
         handlers.get().add(handler);
     }
 

@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
+@SuppressWarnings("unused")
 public interface AccountRepository extends CrudRepository<BankAccount, String> {
 
     Optional<BankAccount> findByAccountHolder(String accountHolder);

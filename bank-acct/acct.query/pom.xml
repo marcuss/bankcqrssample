@@ -61,12 +61,6 @@
             <artifactId>acct.commons</artifactId>
             <version>1.0.0</version>
         </dependency>
-        <dependency>
-            <groupId>co.marcuss</groupId>
-            <artifactId>acct.commons</artifactId>
-            <version>1.0.0</version>
-            <scope>compile</scope>
-        </dependency>
     </dependencies>
 
     <build>

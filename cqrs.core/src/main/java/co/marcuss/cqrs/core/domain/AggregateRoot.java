@@ -51,6 +51,6 @@ public class AggregateRoot {
     }
 
     public void replyEvents(List<BaseEvent> events) {
-        events.stream().forEach(e-> applyChange(e, false));
+        events.forEach(e-> applyChange(e, false));
     }
 }

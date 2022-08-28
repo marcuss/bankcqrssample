@@ -6,6 +6,7 @@ import co.marcuss.cqrs.core.queries.QueryHandlerMethod;
 
 import java.util.List;
 
+@SuppressWarnings("unused")
 public interface QueryDispatcher {
 
     <T extends BaseQuery> void registerHandler(Class<T> type, QueryHandlerMethod<T> handler);

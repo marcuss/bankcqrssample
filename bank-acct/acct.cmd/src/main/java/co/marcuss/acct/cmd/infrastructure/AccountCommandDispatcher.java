@@ -19,6 +19,7 @@ public class AccountCommandDispatcher implements CommandDispatcher {
     public <T extends BaseCommand> void registerHandler(Class<T> type, CommandHandlerMethod<T> handler) {
         var handlers =
                 routes.computeIfAbsent(type, e -> Optional.of(new LinkedList<>()));
+        //noinspection OptionalGetWithoutIsPresent
         handlers.get().add(handler);
     }
 

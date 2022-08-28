@@ -4,8 +4,8 @@ import java.util.UUID;
 
 public final class PrefixedUIID implements java.io.Serializable, Comparable<PrefixedUIID> {
 
-    private UUID id;
-    private String prefix;
+    private final UUID id;
+    private final String prefix;
 
     public PrefixedUIID(String prefix, UUID id) {
         this.prefix = prefix;

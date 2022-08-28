@@ -3,9 +3,6 @@ mvnw
 .mvn
 mvnw.cmd
 HELP.md
-mvnw
-.mvn
-mvnw.cmd
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
