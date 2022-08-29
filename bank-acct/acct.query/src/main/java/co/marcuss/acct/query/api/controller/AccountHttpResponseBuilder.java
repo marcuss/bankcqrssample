@@ -13,9 +13,9 @@ public interface AccountHttpResponseBuilder {
         return buildSuccessfulResponse(bankAccounts, HttpStatus.OK);
     }
 
-    default ResponseEntity<AccountLookupResponse> buildSuccessfulResponse(List<BankAccount> bankAccounts, HttpStatus status) {
+    default ResponseEntity<AccountLookupResponse> buildSuccessfulResponse(List<BankAccount> bankAccounts, HttpStatus notFoundStatus) {
         if (bankAccounts.isEmpty()) {
-            return new ResponseEntity<>(new AccountLookupResponse("No accounts found"), status);
+            return new ResponseEntity<>(new AccountLookupResponse("No accounts found"), notFoundStatus);
         }
         return new ResponseEntity<>(
                 AccountLookupResponse.builder().
