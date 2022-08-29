@@ -10,7 +10,7 @@ import java.util.Optional;
 @SuppressWarnings("unused")
 public interface AccountRepository extends ListCrudRepository<BankAccount, String> {
 
-    Optional<BankAccount> findByAccountHolder(String accountHolder);
+    List<BaseEntity> findByAccountHolder(String accountHolder);
 
     List<BaseEntity> findByBalanceGreaterThan(BigDecimal amount);
 
