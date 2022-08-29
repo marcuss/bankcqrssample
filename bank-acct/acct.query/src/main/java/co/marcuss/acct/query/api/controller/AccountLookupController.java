@@ -10,7 +10,6 @@ import co.marcuss.acct.query.domain.BankAccount;
 import co.marcuss.cqrs.core.infrastructure.QueryDispatcher;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +22,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping(path = "api/v1/bank-account")
-public class AccountLookupController {
+public class AccountLookupController implements AccountHttpResponseBuilder {
 
 
     private final QueryDispatcher queryDispatcher;
@@ -41,9 +40,11 @@ public class AccountLookupController {
             return buildSuccessfulResponse(bankAccounts);
         }
         catch (IllegalStateException e) {
+            log.warn("Bad Request Caused By: {}", e.getMessage());
             return buildClientErrorResponse(e);
         }
         catch (Exception e) {
+            log.error("Error in account lookup request.", e);
             return buildServerErrorResponse(e);
         }
     }
@@ -56,9 +57,11 @@ public class AccountLookupController {
             return buildSuccessfulResponse(bankAccounts);
         }
         catch (IllegalStateException e) {
+            log.warn("Bad Request Caused By: {}", e.getMessage());
             return buildClientErrorResponse(e);
         }
         catch (Exception e) {
+            log.error("Error in account lookup request.", e);
             return buildServerErrorResponse(e);
         }
     }
@@ -71,9 +74,11 @@ public class AccountLookupController {
             return buildSuccessfulResponse(bankAccounts);
         }
         catch (IllegalStateException e) {
+            log.warn("Bad Request Caused By: {}", e.getMessage());
             return buildClientErrorResponse(e);
         }
         catch (Exception e) {
+            log.error("Error in account lookup request.", e);
             return buildServerErrorResponse(e);
         }
     }
@@ -86,29 +91,12 @@ public class AccountLookupController {
             return buildSuccessfulResponse(bankAccounts);
         }
         catch (IllegalStateException e) {
+            log.warn("Bad Request Caused By: {}", e.getMessage());
             return buildClientErrorResponse(e);
         }
         catch (Exception e) {
+            log.error("Error in account lookup request.", e);
             return buildServerErrorResponse(e);
         }
-    }
-
-
-    private ResponseEntity<AccountLookupResponse> buildSuccessfulResponse(List<BankAccount> bankAccounts) {
-        if (bankAccounts.isEmpty()) {
-            return new ResponseEntity<>(new AccountLookupResponse("No accounts found"), HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(AccountLookupResponse.builder().accounts(bankAccounts).message("Successfully returned {0} accounts.", bankAccounts.size()).build(), HttpStatus.OK);
-    }
-
-    private ResponseEntity<AccountLookupResponse> buildClientErrorResponse(IllegalStateException e) {
-        log.warn("Bad Request Caused By: {}", e.getMessage());
-        return new ResponseEntity<>(AccountLookupResponse.builder().message("Bad Request Caused By: {}", e.getMessage()).build(), HttpStatus.BAD_REQUEST);
-    }
-
-    private ResponseEntity<AccountLookupResponse> buildServerErrorResponse(Exception e) {
-        log.error("Error in account lookup request.", e);
-        log.info("Error in account lookup account request.");
-        return new ResponseEntity<>(new AccountLookupResponse("Server failed to fulfill the request."), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
